@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Ramesh",
+    "mobile": "9876543210",
+    "place": "Thiruvannamalai",
+    "transactions": [
+      { "date": "2025-08-20", "type": "credit", "amount": 2000 },
+      { "date": "2025-08-22", "type": "credit", "amount": 1500 },
+      { "date": "2025-08-25", "type": "payment", "amount": 500 }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Priya",
+    "mobile": "9090909090",
+    "place": "Polur",
+    "transactions": [
+      { "date": "2025-08-21", "type": "credit", "amount": 1200 },
+      { "date": "2025-08-26", "type": "payment", "amount": 200 }
+    ]
+  }
+]

@@ -1,21 +1,17 @@
 {
-  "name": "backend",
+  "name": "creditflow-backend",
   "version": "1.0.0",
-  "type": "commonjs",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon Server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^17.2.2",
-    "express": "^5.1.0",
-    "mysql2": "^3.15.0"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.9.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

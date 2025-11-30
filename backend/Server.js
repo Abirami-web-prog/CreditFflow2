@@ -1,55 +1,50 @@
+{"id":"59210","variant":"standard","title":"Final server.js backend file"}
 import express from "express";
-import mysql from "mysql2/promise";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import mysql from "mysql2/promise";
 
+// Load .env
 dotenv.config();
 
 const app = express();
 
-// For __dirname in ES Modules
+// Fix __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// CORS allow all
+// Middleware
 app.use(
   cors({
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-
 app.use(express.json());
 
-// MySQL connection pool
+// Database connection
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD || process.env.DB_PASS,
+  database: process.env.DB_DATABASE || process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
 });
 
-// ---------------------------
-//        YOUR API ROUTES
-// ---------------------------
-
-// Example (I will replace this once you send your file)
-app.get("/customers", async (req, res) => {
-  try {
-    const [rows] = await pool.query("SELECT * FROM customers");
-    res.json(rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "DB error" });
-  }
-});
+// Make pool global
+app.set("db", pool);
 
 // ---------------------------
-//      SERVE REACT FRONTEND
+//        API ROUTES
+// ---------------------------
+import customerRoutes from "./routes/customers.js"; // YOUR ROUTER FILE
+app.use("/customers", customerRoutes);
+
+// ---------------------------
+//     SERVE REACT FRONTEND
 // ---------------------------
 const frontendPath = path.join(__dirname, "../frontend/build");
 app.use(express.static(frontendPath));

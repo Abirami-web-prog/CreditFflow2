@@ -1,4 +1,3 @@
-// routes/customers.js
 import express from "express";
 import pool from "../db.js";
 

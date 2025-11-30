@@ -1,13 +1,14 @@
-// db.js (ES Module)
+// db.js
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Needed for __dirname in ES Modules
+// Fix __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Load environment variables
 dotenv.config({ path: path.join(__dirname, ".env") });
 
 const pool = mysql.createPool({
@@ -20,11 +21,11 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-// Test connection
+// Test database connection
 pool.getConnection()
-  .then(connection => {
+  .then(conn => {
     console.log("✅ Database connected successfully!");
-    connection.release();
+    conn.release();
   })
   .catch(err => {
     console.error("❌ Database connection failed:", err.message);

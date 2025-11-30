@@ -34,9 +34,19 @@ const pool = mysql.createPool({
 });
 
 // ---------------------------
-//        API ROUTES
+//        YOUR API ROUTES
 // ---------------------------
-// Keep your /customers, /transactions routes as they are
+
+// Example (I will replace this once you send your file)
+app.get("/customers", async (req, res) => {
+  try {
+    const [rows] = await pool.query("SELECT * FROM customers");
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "DB error" });
+  }
+});
 
 // ---------------------------
 //      SERVE REACT FRONTEND

@@ -54,7 +54,7 @@ function App() {
     async (id, customer) => {
       try {
         setAppError(null);
-        await axios.put(`${BASE_URL`}/${id}, customer);
+        await axios.put(`${BASE_URL`}/`${id}`, customer);
         await fetchCustomers();
         setEditingCustomer(null);
         return { success: true };
@@ -74,7 +74,7 @@ function App() {
     async (id) => {
       try {
         setAppError(null);
-        await axios.delete(`${BASE_URL`}/${id});
+        await axios.delete(`${BASE_URL`}/`${id}`);
         await fetchCustomers();
       } catch (error) {
         const errorMsg =
@@ -91,7 +91,7 @@ function App() {
     async (customerId, transaction) => {
       try {
         setAppError(null);
-        await axios.post(`${BASE_URL`}/${customerId}/transactions, transaction);
+        await axios.post(`${BASE_URL`}/`${customerId}`/transactions, transaction);
         await fetchCustomers();
       } catch (error) {
         const errorMsg =
@@ -110,7 +110,7 @@ function App() {
       try {
         setAppError(null);
         await axios.put(
-         ` ${BASE_URL}`/${customerId}/transactions/${transactionId},
+         ` ${BASE_URL}`/`${customerId}`/transactions/`${transactionId}`,
           transaction
         );
         await fetchCustomers();
@@ -130,7 +130,7 @@ function App() {
     async (customerId, transactionId) => {
       try {
         setAppError(null);
-        await axios.delete(`${BASE_URL}`/${customerId}/transactions/${transactionId});
+        await axios.delete(`${BASE_URL}`/`${customerId}`/transactions/`${transactionId}`);
         await fetchCustomers();
       } catch (error) {
         const errorMsg =
@@ -154,7 +154,7 @@ function App() {
       if (isObject && customerOrId.place !== undefined) {
         customer = customerOrId;
       } else {
-        const resp = await axios.get(`${BASE_URL}/${id}`);
+        const resp = await axios.get(`${BASE_URL}`/`${id}`);
         customer = resp.data;
       }
 

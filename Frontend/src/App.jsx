@@ -74,7 +74,7 @@ function App() {
     async (id) => {
       try {
         setAppError(null);
-        await axios.delete(${BASE_URL}/${id});
+        await axios.delete(`${BASE_URL}/${id}`);
         await fetchCustomers();
       } catch (error) {
         const errorMsg =

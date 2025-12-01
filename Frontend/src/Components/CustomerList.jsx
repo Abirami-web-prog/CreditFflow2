@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -6,24 +7,22 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [deleting, setDeleting] = useState(null);
 
-  // Safe balance calculation
-  const getBalance = (transactions) =>
-    Array.isArray(transactions)
-      ? transactions.reduce(
-          (acc, t) => (t.type === "credit" ? acc + Number(t.amount) : acc - Number(t.amount)),
-          0
-        )
-      : 0;
+  // Calculate total balance safely
+  const getBalance = (transactions) => {
+    if (!Array.isArray(transactions)) return 0;
+    return transactions.reduce(
+      (acc, t) => acc + (t.type === "credit" ? Number(t.amount) : -Number(t.amount)),
+      0
+    );
+  };
 
-  const totalBalance = Array.isArray(customers)
-    ? customers.reduce((acc, customer) => acc + getBalance(customer.transactions), 0).toFixed(2)
-    : "0.00";
+  const totalBalance = customers
+    .reduce((acc, customer) => acc + getBalance(customer.transactions), 0)
+    .toFixed(2);
 
-  const filteredCustomers = Array.isArray(customers)
-    ? customers.filter((customer) =>
-        (customer.name || "").toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : [];
+  const filteredCustomers = customers.filter((customer) =>
+    customer.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleDelete = async (customerId) => {
     if (window.confirm("Delete this customer?")) {
@@ -70,7 +69,7 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
                 >
                   <div>
                     <Link className="link-btn" to={`/customer/${c.id}`}>
-                      {c.name}
+                      {c.name || "Unnamed"}
                     </Link>
                     <span className="balance">Rs {bal}</span>
                   </div>
@@ -108,14 +107,16 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
 CustomerList.propTypes = {
   customers: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
       name: PropTypes.string.isRequired,
       mobile: PropTypes.string.isRequired,
       place: PropTypes.string,
       transactions: PropTypes.arrayOf(
         PropTypes.shape({
           type: PropTypes.oneOf(["credit", "payment"]).isRequired,
-          amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+          amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired,
           date: PropTypes.string,
         })
       ),

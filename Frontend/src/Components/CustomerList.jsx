@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -7,11 +6,13 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [deleting, setDeleting] = useState(null);
 
-  // Calculate total balance safely
+  // SAFE BALANCE CALCULATION
   const getBalance = (transactions) => {
     if (!Array.isArray(transactions)) return 0;
+
     return transactions.reduce(
-      (acc, t) => acc + (t.type === "credit" ? Number(t.amount) : -Number(t.amount)),
+      (acc, t) =>
+        acc + (t.type === "credit" ? Number(t.amount) : -Number(t.amount)),
       0
     );
   };
@@ -68,7 +69,7 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
                   }}
                 >
                   <div>
-                    <Link className="link-btn" to={`/customer/${c.id}`}>
+                    <Link className="link-btn" to={`/customer/${c.id}}`>
                       {c.name || "Unnamed"}
                     </Link>
                     <span className="balance">Rs {bal}</span>

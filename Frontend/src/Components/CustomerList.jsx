@@ -65,7 +65,7 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
                   }}
                 >
                   <div>
-                    <Link className="link-btn" to={/customer/${c.id}}>
+                    <Link className="link-btn" to={`/customer/${c.id}`}>
                       {c.name}
                     </Link>
                     <span className="balance">Rs {bal}</span>

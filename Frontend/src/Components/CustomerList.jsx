@@ -6,20 +6,24 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [deleting, setDeleting] = useState(null);
 
-  // Calculate total balance from transactions
+  // Safe balance calculation
   const getBalance = (transactions) =>
-    (transactions || []).reduce(
-      (acc, t) => (t.type === "credit" ? acc + t.amount : acc - t.amount),
-      0
-    );
+    Array.isArray(transactions)
+      ? transactions.reduce(
+          (acc, t) => (t.type === "credit" ? acc + Number(t.amount) : acc - Number(t.amount)),
+          0
+        )
+      : 0;
 
-  const totalBalance = customers
-    .reduce((acc, customer) => acc + getBalance(customer.transactions), 0)
-    .toFixed(2);
+  const totalBalance = Array.isArray(customers)
+    ? customers.reduce((acc, customer) => acc + getBalance(customer.transactions), 0).toFixed(2)
+    : "0.00";
 
-  const filteredCustomers = customers.filter((customer) =>
-    customer.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredCustomers = Array.isArray(customers)
+    ? customers.filter((customer) =>
+        (customer.name || "").toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   const handleDelete = async (customerId) => {
     if (window.confirm("Delete this customer?")) {
@@ -104,18 +108,17 @@ function CustomerList({ customers, deleteCustomer, startEditing }) {
 CustomerList.propTypes = {
   customers: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       name: PropTypes.string.isRequired,
       mobile: PropTypes.string.isRequired,
       place: PropTypes.string,
       transactions: PropTypes.arrayOf(
         PropTypes.shape({
           type: PropTypes.oneOf(["credit", "payment"]).isRequired,
-          amount: PropTypes.number.isRequired,
+          amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
           date: PropTypes.string,
         })
-      ).isRequired,
+      ),
     })
   ).isRequired,
   deleteCustomer: PropTypes.func.isRequired,

@@ -1,3 +1,4 @@
+
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -15,7 +16,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Test route - to verify backend is working
+// Test route
 app.get("/", (req, res) => {
   res.json({ 
     message: "✅ CreditFlow Backend is running!",
@@ -34,5 +35,5 @@ app.use("/customers", customerRoutes);
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Backend running on port ${PORT}`);
+  console.log(🚀 Backend running on port ${PORT});
 });

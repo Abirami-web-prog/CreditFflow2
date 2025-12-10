@@ -1,10 +1,7 @@
-
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import customerRoutes from "./Routes/customerRoutes.js";
-
-dotenv.config();
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+const customerRoutes = require("./Routes/customerRoutes");
 
 const app = express();
 

@@ -4,17 +4,17 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const pool = mysql.createPool({
-  host: process.env.MYSQLHOST,          // Railway variable
-  user: process.env.MYSQLUSER,          // Railway variable
-  password: process.env.MYSQLPASSWORD,  // Railway variable
-  database: process.env.MYSQLDATABASE,  // Railway variable
-  port: process.env.MYSQLPORT || 3306,  // Railway variable
+  host: process.env.MYSQL_HOST,          // Railway public host
+  user: process.env.MYSQL_USER,          // Railway user
+  password: process.env.MYSQL_PASSWORD,  // Railway password
+  database: process.env.MYSQL_DATABASE,  // Railway database name
+  port: process.env.MYSQL_PORT || 3306,  // Railway public port
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
 });
 
-// Test database connection
+// Test DB connection
 (async () => {
   try {
     const conn = await pool.getConnection();

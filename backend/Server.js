@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.json({ 
-    message: "✅ CreditFlow Backend is running!",
+    message: "CreditFlow Backend is running!",
     status: "active",
     timestamp: new Date().toISOString(),
     endpoints: {
@@ -53,7 +53,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error("❌ Server error:", err);
+  console.error("Server error:", err);
   res.status(500).json({ 
     error: "Internal server error",
     message: err.message 
@@ -64,9 +64,9 @@ const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || "0.0.0.0";
 
 app.listen(PORT, HOST, () => {
-  console.log(`🚀 Backend running on ${HOST}:${PORT}`);
-  console.log(🌍 Environment: ${process.env.NODE_ENV || 'development'});
-  console.log(📡 CORS enabled for: ${process.env.FRONTEND_URL || '*'});
+  console.log(`Backend running on ${HOST}:${PORT}`);
+  console.log(Environment: ${process.env.NODE_ENV || 'development'});
+  console.log(CORS enabled for: ${process.env.FRONTEND_URL || '*'});
 });
 
 process.on('SIGTERM', () => {
